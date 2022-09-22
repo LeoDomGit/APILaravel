@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Mail;
 
-date_default_timezone_set('Asia/Ho_Chi_Minh');
+
 class UserController extends BaseController
 {
 
