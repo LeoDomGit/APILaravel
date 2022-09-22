@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\API;
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\BaseController;
 use App\Models\User;
 use App\Models\UserRole;
 use Illuminate\Http\Request;
@@ -9,13 +9,32 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Mail;
+
 date_default_timezone_set('Asia/Ho_Chi_Minh');
-class UserController extends Controller
+class UserController extends BaseController
 {
+
+
+    public function deleteRole(Request $request){
+        $idRole= $request->idRole;
+        $checknull=BaseController::checkNull($idRole);
+        $checkint = BaseController::checkInt($idRole);
+        if($checknull==false|| $checkint==false){
+            return response()->json(['status'=>400]);
+        }else{
+            UserRole::where('id', $idRole)->delete();
+            return response()->json(['check'=>200]);
+        }
+
+    }
+
+    // ===============================
+
     public function AllRole(){
         $result = DB::Table('userrole')->get();
         return response()->json($result);
     }
+
     // ============================================================
     public function addUserRole(){
         $newUsRole= $_POST['newUsRole'];

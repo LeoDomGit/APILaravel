@@ -21,5 +21,6 @@ Route::post('/register', [UserController::class,'create']);
 Route::post('/addUserRole', [UserController::class,'addUserRole']);
 Route::get('/allUser', [UserController::class,'allUser']);
 Route::get('/allUserRole', [UserController::class,'AllRole']);
+Route::post('/deleteRole', [UserController::class,'deleteRole']);
 
 
