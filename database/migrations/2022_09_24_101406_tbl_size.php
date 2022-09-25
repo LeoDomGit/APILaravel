@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tbl_size', function (Blueprint $table) {
-            $table->integer('idtag',true,false);
+            $table->integer('idSize',true,false);
             $table->string('sizename');
             $table->string('sizeinfo');
             $table->timestamps();
@@ -29,6 +29,7 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('tbl_size');
+
     }
 };

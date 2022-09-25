@@ -13,10 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('provinces', function (Blueprint $table) {
+        Schema::create('prodTage', function (Blueprint $table) {
             $table->integer('id',true,false);
-            $table->string('proVinceName');
-            $table->integer('status',false,false)->default(1);
+            $table->integer('idProd',false,false);
+            $table->integer('idTag',false,false);
+            $table->foreign('idProd')->references('id')->on('products');
+            $table->foreign('idTag')->references('idtag')->on('tbl_tag');
             $table->timestamps();
         });
     }
@@ -27,7 +29,7 @@ return new class extends Migration
      * @return void
      */
     public function down()
-    {        Schema::drop('provinces');
-
+    {
+        Schema::dropIfExists('prodTage');
     }
 };

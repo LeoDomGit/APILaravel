@@ -13,18 +13,23 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('ProdQuantity', function (Blueprint $table) {
+        Schema::create('storageProd', function (Blueprint $table) {
             $table->integer('idProd',false,false);
-            $table->integer('idStorage',false,false);
+            $table->integer('idSize',false,false);
             $table->integer('idColor',false,false);
+            $table->integer('idStorage',false,false);
             $table->integer('quantity',false,false);
             $table->foreign('idProd')->references('id')->on('products');
-            $table->foreign('idStorage')->references('id')->on('storages');
+            $table->foreign('idSize')->references('idSize')->on('tbl_size');
             $table->foreign('idColor')->references('id')->on('colors');
+            $table->foreign('idStorage')->references('id')->on('storages');
+
 
             $table->timestamps();
+            
 
         });
+
     }
 
     /**
@@ -34,6 +39,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::drop('ProdQuantity');
+        Schema::dropIfExists('storageProd');
     }
 };

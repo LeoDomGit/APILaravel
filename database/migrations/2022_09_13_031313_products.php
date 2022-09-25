@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('summary');
             $table->text('content');
             $table->integer('status')->default(0);
-            $table->integer('prodType',false,false);
-            $table->foreign('prodType')->references('id')->on('prodType');
+            $table->integer('idcate',false,false);
+            $table->foreign('idcate')->references('idcate')->on('categrory');
             $table->timestamps();
         
         });
