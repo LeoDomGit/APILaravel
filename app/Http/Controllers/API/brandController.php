@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\BaseController;
 use App\Models\brandM;
 use Illuminate\Http\Request;
-
-class brandController extends BaseController
+use Illuminate\Support\Facades\DB;
+class BrandController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class brandController extends BaseController
      */
     public function index()
     {
-        
+        //
     }
 
     /**
@@ -22,9 +23,10 @@ class brandController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function allbrand()
     {
-        
+        $allBrands = brandM::all();
+        return response()->json($allBrands);
     }
 
     /**
@@ -36,15 +38,15 @@ class brandController extends BaseController
     public function store(Request $request)
     {
         $brandname= $request->brandname;
-        if(BaseController::SQLValidate($brandname)==true){
+        if(BaseController::SQLValidate($brandname)==false){
             return response()->json(['check'=>false,'message'=>'rejected']);
         }else if(BaseController::checkExist($brandname,'tbl_brand','brandname')!=0){
             return response()->json(['check'=>false,'message'=>'exist']);
         }else{
-            
+            brandM::create(['brandname'=>$brandname]);
+            return response()->json(['check'=>true]);
         }
     }
-
     /**
      * Display the specified resource.
      *
@@ -62,9 +64,19 @@ class brandController extends BaseController
      * @param  \App\Models\brandM  $brandM
      * @return \Illuminate\Http\Response
      */
-    public function edit(brandM $brandM)
+    public function edit(Request $request)
     {
-        //
+        $brandname = $request->brandname;
+        $idBrand = $request->idBrand;
+        if(BaseController::checkInt($idBrand)==false||BaseController::SQLValidate($brandname)==false){
+            return response()->json(['check'=>false,'message'=>'rejected']);
+        }else if( BaseController::checkExist($brandname,'tbl_brand','brandname')!=0){
+            return response()->json(['check'=>false,'message'=>'exist']);
+        }else{
+            DB::Table('tbl_brand')->where('idbrand',$idBrand)->update(['brandname'=>$brandname,'updated_at'=>now()]);
+            return response()->json(['check'=>true]);
+        }
+
     }
 
     /**
@@ -85,8 +97,18 @@ class brandController extends BaseController
      * @param  \App\Models\brandM  $brandM
      * @return \Illuminate\Http\Response
      */
-    public function destroy(brandM $brandM)
+    public function destroy(Request $request)
     {
-        //
+        $idBrand = $request->idBrand;
+        if(BaseController::checkInt($idBrand)==false){
+            return response()->json(['check'=>false,'message'=>'rejected']);
+        }else if(BaseController::checkExist($idBrand,'tbl_brand','idbrand')==0){
+            return response()->json(['check'=>false,'message'=>'not exist']);
+        }else if((BaseController::checkExist($idBrand,'products','idBrand')!=0)){
+            return response()->json(['check'=>false,'message'=>'fail']);
+        }else {
+            brandM::where('idbrand',$idBrand)->delete();
+            return response()->json(['check'=>true]);
+        }
     }
 }
