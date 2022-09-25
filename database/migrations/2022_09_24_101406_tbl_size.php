@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('prodType', function (Blueprint $table) {
-            $table->integer('id',true,false);
-            $table->string('typeName');
-            $table->integer('status')->default(1);
+        Schema::create('tbl_size', function (Blueprint $table) {
+            $table->integer('idSize',true,false);
+            $table->string('sizename');
+            $table->string('sizeinfo');
             $table->timestamps();
+            
         });
     }
 
@@ -28,6 +29,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('prodType');
+        Schema::dropIfExists('tbl_size');
+
     }
 };

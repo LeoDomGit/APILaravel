@@ -13,11 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('colors', function (Blueprint $table) {
-            $table->integer('id',true,false);
-            $table->string('colorName');
-            $table->string('colorpicker');
-            $table->integer('status',false,false)->default(1);
+        Schema::create('tbl_brand', function (Blueprint $table) {
+            $table->integer('idbrand',true,false);
+            $table->string('brandname');
+            $table->integer('status',false,false)->default(0);
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('colors');
+       Schema::dropIfExists('tbl_brand');
     }
 };

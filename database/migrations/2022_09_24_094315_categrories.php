@@ -13,11 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('provinces', function (Blueprint $table) {
-            $table->integer('id',true,false);
-            $table->string('proVinceName');
-            $table->integer('status',false,false)->default(1);
+        Schema::create('categrory', function (Blueprint $table) {
+            $table->integer('idcate',true,false);
+            $table->string('cateName');
+            $table->integer('status')->default(0);
             $table->timestamps();
+            
         });
     }
 
@@ -27,7 +28,7 @@ return new class extends Migration
      * @return void
      */
     public function down()
-    {        Schema::drop('provinces');
-
+    {
+        Schema::drop('categrory');
     }
 };

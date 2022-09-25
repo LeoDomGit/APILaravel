@@ -16,9 +16,7 @@ return new class extends Migration
         Schema::create('storages', function (Blueprint $table) {
             $table->integer('id',true,false);
             $table->string('storageName');
-            $table->integer('idProvince',false,false);
-            $table->foreign('idProvince')->references('id')->on('provinces');
-            $table->integer('status',false,false)->default(1);
+            $table->string('storageInfo');
             $table->timestamps();
         });
     }
