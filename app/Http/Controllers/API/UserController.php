@@ -38,13 +38,7 @@ class UserController extends BaseController
     // ============================================================
     public function addUserRole(){
         $newUsRole= $_POST['newUsRole'];
-        $check=false;
-        if(preg_match('/Select|select|SELECT/', $newUsRole)||preg_match('/Update|update|UPDATE/', $newUsRole)||preg_match('/DELETE|Delete|delete/', $newUsRole)){
-            $check= false;
-        }else{
-            $check= true;
-        }
-        if($check==true){
+        if(BaseController::SQLValidate($newUsRole)==true){
             $check =UserRole::where('name',$newUsRole)->count();
             if($check==0){
                 DB::Table('userrole')->insert(['name'=>$newUsRole,'created_at'=>now()]);
@@ -67,11 +61,9 @@ class UserController extends BaseController
         $email= $_POST['email'];
         $userRole=$request->userRole;
         // ==========================================================================================
-        if(preg_match('/Select|select|SELECT/', $username)||preg_match('/Update|update|UPDATE/', $username)||preg_match('/DELETE|Delete|delete/', $username)){
+        if(BaseController::SQLValidate($username)==false||BaseController::SQLValidate($email)==false||BaseController::SQLValidate($userRole)==false){
             return response()->json(['check'=>401,'message'=>'Rejected']);
-        }else if(preg_match('/Select|select|SELECT/', $email)||preg_match('/Update|update|UPDATE/', $email)||preg_match('/DELETE|Delete|delete/', $email)){
-            return response()->json(['check'=>401,'message'=>'Rejected']);
-        }else if(!preg_match('/(.+)@(.+)\.(com)/i',$email)){
+        }else if(BaseController::checkMail($email)==false){
             return response()->json(['check'=>401,'message'=>'Email không hợp lệ']);
         }else{
             $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyz';

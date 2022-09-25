@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\brandController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,5 +24,6 @@ Route::post('/addUserRole', [UserController::class,'addUserRole']);
 Route::get('/allUser', [UserController::class,'allUser']);
 Route::get('/allUserRole', [UserController::class,'AllRole']);
 Route::post('/deleteRole', [UserController::class,'deleteRole']);
+Route::post('/addBrand', [UserController::class,'store']);
 
 

@@ -20,7 +20,9 @@ return new class extends Migration
             $table->text('content');
             $table->integer('status')->default(0);
             $table->integer('idcate',false,false);
+            $table->integer('idbrand',false,false);
             $table->foreign('idcate')->references('idcate')->on('categrory');
+            $table->foreign('idbrand')->references('idbrand')->on('tbl_brand');
             $table->timestamps();
         
         });

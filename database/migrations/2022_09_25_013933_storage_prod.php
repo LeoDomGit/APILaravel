@@ -23,8 +23,6 @@ return new class extends Migration
             $table->foreign('idSize')->references('idSize')->on('tbl_size');
             $table->foreign('idColor')->references('id')->on('colors');
             $table->foreign('idStorage')->references('id')->on('storages');
-
-
             $table->timestamps();
             
 
