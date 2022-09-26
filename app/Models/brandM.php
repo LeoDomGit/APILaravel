@@ -9,7 +9,6 @@ class brandM extends Model
 {
     use HasFactory;
     protected $table = 'tbl_brand';
-    public $timestamps = false;
     protected $primaryKey = 'idbrand';
     protected $fillable = ['idbrand', 'brandname', 'status', 'created_at', 'updated_at'];
     public function cate()
