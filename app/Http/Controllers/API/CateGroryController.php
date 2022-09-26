@@ -8,14 +8,39 @@ use App\Models\cateM;
 use Illuminate\Support\Facades\DB;
 class CateGroryController extends BaseController
 {
+
+      /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deleteCate(Request $request){
+        $idCate = $request->idCate;
+        if(BaseController::checkInt($idCate)==false||BaseController::checkExist($idCate,'products','idcate')!=0){
+            return response()->json(['check'=>false,'message'=>'exist']);
+        }else{
+            cateM::where('idcate', $idCate)->delete();
+            return response()->json(['check'=>true]);
+        }
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function editCate(Request $request)
     {
-        
+        $idCate = $request->idCate;
+        $newCate = $request->newCate;
+        if(BaseController::SQLValidate($newCate)==false||BaseController::checkInt($idCate)==false){
+            return response()->json(['check'=>false,'message'=>'rejected']);
+        }else if(BaseController::checkExist($newCate,'categrory','cateName')!=0){
+            return response()->json(['check'=>false,'message'=>'exist']);
+        }else{
+            cateM::where('idcate',$idCate)->update(['cateName' => $newCate,'updated_at'=>now()]);
+            return response()->json(['check'=>true]);
+        }
     }
 
     /**
@@ -57,9 +82,22 @@ class CateGroryController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function switchCate(Request $request)
     {
-        //
+        $idcate= $request->idCate;
+        if(BaseController::checkInt($idcate)==false){
+            return response()->json(['check'=>false,'message'=>'rejected']);
+        }else{
+            $oldStt=BaseController::getValue('categrory',$idcate,'idcate','status');
+            if($oldStt==0){
+                cateM::where('idcate',$idcate)->update(['status' => 1,'updated_at'=>now()]);
+                return response()->json(['check'=>true]);
+            }else{
+                cateM::where('idcate',$idcate)->update(['status' => 0,'updated_at'=>now()]);
+                return response()->json(['check'=>true]);
+
+            }
+        }
     }
 
     /**

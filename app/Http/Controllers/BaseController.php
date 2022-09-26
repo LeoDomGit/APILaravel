@@ -37,7 +37,7 @@ class BaseController
     public function SQLValidate($item)
     {
 
-        $pattern = '/(select|Select|SELECT|update|Update|UPDATE|Delete|DELETE|delete) +\w/ ';
+        $pattern = '/(select|Select|SELECT|update|Update|UPDATE|Delete|DELETE|delete) (.+) from/i ';
         if(trim($item)==''){
             return false;
         }else if(preg_match($pattern,$item)){
@@ -61,7 +61,11 @@ class BaseController
     // ====================================
 
     public function checkInt($item){
-        return is_numeric($item);
+        if(trim($item)==''){
+            return false;
+        }else{
+            return is_numeric($item);
+        }
     }
     // =================================
 

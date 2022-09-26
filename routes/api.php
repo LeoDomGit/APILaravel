@@ -38,6 +38,11 @@ Route::post('/deleteBrand', [brandController::class,'destroy']);
 Route::post('/editBrand', [brandController::class,'edit']);
 // ==============================================================
 Route::post('/addCate', [CateGroryController::class,'create']);
+Route::post('/switchCate', [CateGroryController::class,'switchCate']);
+Route::post('/editCate', [CateGroryController::class,'editCate']);
+Route::post('/deleteCate', [CateGroryController::class,'deleteCate']);
+
+
 
 
 
