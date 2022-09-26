@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 25, 2022 at 08:55 AM
--- Server version: 5.7.33
+-- Generation Time: Sep 26, 2022 at 10:36 AM
+-- Server version: 10.9.3-MariaDB-log
 -- PHP Version: 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -24,16 +24,34 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `brand_categrory`
+--
+
+CREATE TABLE `brand_categrory` (
+  `idBrand` int(11) NOT NULL,
+  `idCate` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `categrory`
 --
 
 CREATE TABLE `categrory` (
   `idcate` int(11) NOT NULL,
   `cateName` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
+  `status` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `categrory`
+--
+
+INSERT INTO `categrory` (`idcate`, `cateName`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Áo Polo', 1, '2022-09-26 03:44:39', '2022-09-26 08:12:58');
 
 -- --------------------------------------------------------
 
@@ -45,7 +63,7 @@ CREATE TABLE `colors` (
   `id` int(11) NOT NULL,
   `colorName` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `colorpicker` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
+  `status` int(11) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -104,11 +122,11 @@ CREATE TABLE `products` (
   `productName` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `summary` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
+  `status` int(11) NOT NULL DEFAULT 0,
   `idcate` int(11) NOT NULL,
   `idBrand` int(11) NOT NULL,
-  `soLuotXem` int(11) NOT NULL DEFAULT '0',
-  `highlight` int(11) NOT NULL DEFAULT '0',
+  `soLuotXem` int(11) NOT NULL DEFAULT 0,
+  `highlight` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -152,7 +170,7 @@ CREATE TABLE `storages` (
 CREATE TABLE `tbl_brand` (
   `idbrand` int(11) NOT NULL,
   `brandname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
+  `status` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -188,7 +206,7 @@ CREATE TABLE `tbl_size` (
 CREATE TABLE `tbl_tag` (
   `idtag` int(11) NOT NULL,
   `tagname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
+  `status` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -202,7 +220,7 @@ CREATE TABLE `tbl_tag` (
 CREATE TABLE `userrole` (
   `id` int(11) NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
+  `status` int(11) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -213,8 +231,7 @@ CREATE TABLE `userrole` (
 
 INSERT INTO `userrole` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'admin', 1, '2022-09-17 11:01:08', NULL),
-(2, 'Nhân viên', 1, '2022-09-17 11:20:22', NULL),
-(3, 'Nhân viên 2', 1, '2022-09-25 02:03:19', NULL);
+(2, 'Nhân viên', 1, '2022-09-17 11:20:22', NULL);
 
 -- --------------------------------------------------------
 
@@ -231,9 +248,9 @@ CREATE TABLE `users` (
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `ggId` text COLLATE utf8mb4_unicode_ci,
+  `ggId` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `idRole` int(11) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
+  `status` int(11) NOT NULL DEFAULT 1,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -244,11 +261,19 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `password2`, `fullName`, `image`, `email`, `email_verified_at`, `ggId`, `idRole`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'admin', '$2y$10$8VyuTdggxGSuHHmpbutwkOhe0B3cvYvVq/ls2It5ueV6dgSsqBxHS', NULL, NULL, NULL, 'leodomsolar@gmail.com', NULL, NULL, 1, 1, NULL, '2022-09-17 11:22:33', NULL);
+(1, 'admin', '$2y$10$8VyuTdggxGSuHHmpbutwkOhe0B3cvYvVq/ls2It5ueV6dgSsqBxHS', NULL, NULL, NULL, 'leodomsolar@gmail.com', NULL, NULL, 1, 1, NULL, '2022-09-17 11:22:33', NULL),
+(3, 'user1', '$2y$10$0r.43da.NOJAY./5dLeYu.Hp68XmJugFK7Ik0abCFvmr4OuCzvxiW', NULL, NULL, NULL, 'trungthanh01233@gmail.com', NULL, NULL, 2, 1, NULL, '2022-09-26 06:21:31', NULL);
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `brand_categrory`
+--
+ALTER TABLE `brand_categrory`
+  ADD PRIMARY KEY (`idBrand`,`idCate`),
+  ADD KEY `idCate` (`idCate`);
 
 --
 -- Indexes for table `categrory`
@@ -339,7 +364,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `categrory`
 --
 ALTER TABLE `categrory`
-  MODIFY `idcate` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idcate` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `colors`
@@ -399,11 +424,18 @@ ALTER TABLE `userrole`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `brand_categrory`
+--
+ALTER TABLE `brand_categrory`
+  ADD CONSTRAINT `brand_categrory_ibfk_1` FOREIGN KEY (`idBrand`) REFERENCES `tbl_brand` (`idbrand`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `brand_categrory_ibfk_2` FOREIGN KEY (`idCate`) REFERENCES `categrory` (`idcate`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `prodtage`
