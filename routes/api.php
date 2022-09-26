@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\brandController;
+use App\Http\Controllers\API\CateGroryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,16 +23,21 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::get('/allUser', [UserController::class,'allUser']);
 Route::get('/allUserRole', [UserController::class,'AllRole']);
 Route::get('/allBrand',[brandController::class,'allbrand']);
+Route::get('/allCate', [CateGroryController::class,'showall']);
 
 // ===============================================================
 
 Route::post('/register', [UserController::class,'create']);
 Route::post('/addUserRole', [UserController::class,'addUserRole']);
-
 Route::post('/deleteRole', [UserController::class,'deleteRole']);
+
+// ==============================================================
+
 Route::post('/addBrand', [brandController::class,'store']);
 Route::post('/deleteBrand', [brandController::class,'destroy']);
 Route::post('/editBrand', [brandController::class,'edit']);
+// ==============================================================
+Route::post('/addCate', [CateGroryController::class,'create']);
 
 
 
