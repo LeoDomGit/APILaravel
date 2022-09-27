@@ -37,13 +37,19 @@ class BrandController extends BaseController
      */
     public function store(Request $request)
     {
-        $brandname= $request->brandname;
+        $brandname = $request->nameBrand;
         if(BaseController::SQLValidate($brandname)==false){
             return response()->json(['check'=>false,'message'=>'rejected']);
         }else if(BaseController::checkExist($brandname,'tbl_brand','brandname')!=0){
             return response()->json(['check'=>false,'message'=>'exist']);
         }else{
-            brandM::create(['brandname'=>$brandname]);
+            $insertBrand = brandM::create(['brandname'=>trim(ucfirst($brandname))]);
+            foreach ($request->cate as $key => $value) {
+                  DB::table('brand_categrory')->insert([
+                    'idBrand' =>$insertBrand->idbrand,
+                    'idCate'=>$value,
+                  ]);
+            }
             return response()->json(['check'=>true]);
         }
     }
