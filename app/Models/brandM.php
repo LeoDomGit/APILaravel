@@ -13,6 +13,6 @@ class brandM extends Model
     protected $fillable = ['idbrand', 'brandname', 'status', 'created_at', 'updated_at'];
     public function cate()
     {
-        return $this->belongsToMany(Category::class, "brand_category", "idBrand", "idCate");
+        return $this->belongsToMany(cateM::class, "brand_categrory", "idBrand", "idCate");
     }
 }

@@ -25,7 +25,7 @@ class BrandController extends BaseController
      */
     public function allbrand()
     {
-        $allBrands = brandM::all();
+        $allBrands = brandM::with('cate')->get();
         return response()->json($allBrands);
     }
 
