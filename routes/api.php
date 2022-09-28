@@ -47,6 +47,8 @@ Route::post('/deleteCate', [CateGroryController::class,'deleteCate']);
 
 // ===========================================================
 Route::post('/addColor', [ColorController::class,'addColor']);
+Route::post('/editColor', [ColorController::class,'editColor']);
+
 
 
 

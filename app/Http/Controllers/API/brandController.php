@@ -13,10 +13,10 @@ class BrandController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-    }
+    // public function index()
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for creating a new resource.
@@ -59,10 +59,10 @@ class BrandController extends BaseController
      * @param  \App\Models\brandM  $brandM
      * @return \Illuminate\Http\Response
      */
-    public function show(brandM $brandM)
-    {
-        //
-    }
+    // public function show(brandM $brandM)
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -92,10 +92,10 @@ class BrandController extends BaseController
      * @param  \App\Models\brandM  $brandM
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, brandM $brandM)
-    {
-        //
-    }
+    // public function update(Request $request, brandM $brandM)
+    // {
+    //     //
+    // }
 
     /**
      * Remove the specified resource from storage.

@@ -91,10 +91,17 @@ class BaseController
         $result = DB::Select($sql);
         return $result;
     }
-    // public function store(Request $request)
-    // {
-    //     //
-    // }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function update($table, $params,$collumn,$columnvalue)
+    {
+        DB::table($table)->where($collumn,$columnvalue)->update($params);
+    }
 
     // /**
     //  * Display the specified resource.
