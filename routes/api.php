@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\brandController;
 use App\Http\Controllers\API\CateGroryController;
+use App\Http\Controllers\API\ColorController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +26,7 @@ Route::get('/allUser', [UserController::class,'allUser']);
 Route::get('/allUserRole', [UserController::class,'AllRole']);
 Route::get('/allBrand',[brandController::class,'allbrand']);
 Route::get('/allCate', [CateGroryController::class,'showall']);
+Route::get('/allColor', [ColorController::class,'showall']);
 
 // ===============================================================
 
@@ -43,7 +46,7 @@ Route::post('/editCate', [CateGroryController::class,'editCate']);
 Route::post('/deleteCate', [CateGroryController::class,'deleteCate']);
 
 // ===========================================================
-Route::post('/addColor', [CateGroryController::class,'deleteCate']);
+Route::post('/addColor', [ColorController::class,'addColor']);
 
 
 
