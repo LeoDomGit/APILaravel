@@ -36,9 +36,10 @@ class SizeController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function showall()
     {
-        //
+        $allSize = SizeM::all();
+        return response()->json($allSize);
     }
 
     /**

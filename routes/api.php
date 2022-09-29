@@ -29,6 +29,7 @@ Route::get('/allUserRole', [UserController::class,'AllRole']);
 Route::get('/allBrand',[brandController::class,'allbrand']);
 Route::get('/allCate', [CateGroryController::class,'showall']);
 Route::get('/allColor', [ColorController::class,'showall']);
+Route::get('/allSize', [SizeController::class,'showall']);
 
 // ===============================================================
 
