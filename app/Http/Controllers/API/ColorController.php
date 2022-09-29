@@ -5,7 +5,6 @@ use App\Models\ColorM;
 use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
 class ColorController extends BaseController
 {
      /**
@@ -67,9 +66,19 @@ class ColorController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function deleteColor(Request $request)
     {
-        //
+        $idColor= $request->idColor;
+        $table='storageprod';
+        $column='idColor';
+        if(BaseController::checkInt($idColor)==false){
+            return response()->json(['check'=>false,'message'=>'rejected']);
+        }else if(BaseController::checkExist($idColor,$table,$column)!=0){
+            return response()->json(['check'=>false,'message'=>'exist']);
+        }else{
+            ColorM::where('id',$idColor)->delete();
+            return response()->json(['check'=>true]);
+        }
     }
 
     /**
