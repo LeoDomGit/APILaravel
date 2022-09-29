@@ -48,9 +48,19 @@ class SizeController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function editSize(Request $request)
     {
-        //
+        $idSize=$request->idSize;
+        $newName=$request->newName;
+        $sizeinfoEdit=$request->sizeinfoEdit;
+        if(BaseController::SQLValidate($newName)==false||BaseController::SQLValidate($sizeinfoEdit)==false||BaseController::checkInt($idSize)==false){
+            return response()->json(['check'=>false,'message'=>'rejected']);
+        }else if((BaseController::checkExist($idSize,'tbl_size','idSize')==0)){
+            return response()->json(['check'=>false,'message'=>'notexists']);
+        }else{
+            DB::Table('tbl_size')->where('idSize',$idSize)->update(['sizename'=>$newName,'sizeinfo'=>$sizeinfoEdit,'updated_at'=>now()]);
+            return response()->json(['check'=>true]);
+        }
     }
 
     /**
