@@ -80,9 +80,20 @@ class SizeController extends BaseController
      * @param  \App\Models\SizeM  $sizeM
      * @return \Illuminate\Http\Response
      */
-    public function edit(SizeM $sizeM)
+    public function deleteSize(Request $request)
     {
-        //
+        $idSize= $request->idSize;
+        if(BaseController::checkInt($idSize)==false){
+            return response()->json(['check'=>false,'message'=>'rejected']);
+        }else if(BaseController::checkExist($idSize,'tbl_size','idSize')==0){
+            return response()->json(['check'=>false,'message'=>'notexist']);
+        }else if(BaseController::checkExist($idSize,'storageprod','idSize')!=0){
+            return response()->json(['check'=>false,'message'=>'exist']);
+        }else{
+            SizeM::where('idSize',$idSize)->delete();
+            return response()->json(['check'=>true]);
+        }
+
     }
 
     /**

@@ -56,7 +56,7 @@ Route::post('/deleteColor', [ColorController::class,'deleteColor']);
 // ===========================================================
 
 Route::post('/addSize', [SizeController::class,'addSize']);
-
+Route::post('/deleteSize', [SizeController::class,'deleteSize']);
 Route::post('/editSize', [SizeController::class,'editSize']);
 
 
