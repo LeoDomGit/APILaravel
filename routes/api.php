@@ -6,6 +6,8 @@ use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\brandController;
 use App\Http\Controllers\API\CateGroryController;
 use App\Http\Controllers\API\ColorController;
+use App\Http\Controllers\API\SizeController;
+
 
 
 /*
@@ -50,7 +52,9 @@ Route::post('/addColor', [ColorController::class,'addColor']);
 Route::post('/editColor', [ColorController::class,'editColor']);
 Route::post('/deleteColor', [ColorController::class,'deleteColor']);
 
+// ===========================================================
 
+Route::post('/addSize', [SizeController::class,'addSize']);
 
 
 
