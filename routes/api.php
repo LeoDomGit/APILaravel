@@ -7,6 +7,7 @@ use App\Http\Controllers\API\brandController;
 use App\Http\Controllers\API\CateGroryController;
 use App\Http\Controllers\API\ColorController;
 use App\Http\Controllers\API\SizeController;
+use App\Http\Controllers\API\TagController;
 
 
 
@@ -30,6 +31,7 @@ Route::get('/allBrand',[brandController::class,'allbrand']);
 Route::get('/allCate', [CateGroryController::class,'showall']);
 Route::get('/allColor', [ColorController::class,'showall']);
 Route::get('/allSize', [SizeController::class,'showall']);
+Route::get('/allTag', [TagController::class,'showall']);
 
 // ===============================================================
 
@@ -59,6 +61,9 @@ Route::post('/addSize', [SizeController::class,'addSize']);
 Route::post('/deleteSize', [SizeController::class,'deleteSize']);
 Route::post('/editSize', [SizeController::class,'editSize']);
 
-
+// ===========================================================
+Route::post('/addTag', [TagController::class,'addTag']);
+Route::post('/editTag', [TagController::class,'editTag']);
+Route::post('/deleteTag', [TagController::class,'deleteTag']);
 
 
