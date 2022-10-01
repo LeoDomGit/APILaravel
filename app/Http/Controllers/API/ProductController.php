@@ -38,7 +38,7 @@ class ProductController extends BaseController
             return response()->json(['check'=>false,'message'=>'exist']);
         }else{
             $lastInsertID = DB::table('products')->insertGetId(['productName'=>$prodName,'summary'=>$summary,'content'=>$desc,'idcate'=>$prodTypeID,'idBrand'=>$brandID,'created_at'=>now()]);
-            return response()->json(['check'=>true,'id'=>$lastInsertID]);
+            return response()->json(['check'=>true,'id'=>$lastInsertID ]);
         }
     }
 

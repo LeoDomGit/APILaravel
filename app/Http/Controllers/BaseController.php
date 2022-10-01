@@ -60,10 +60,8 @@ class BaseController
         foreach ($arr as $value) {
             if(trim($value)==''){
                 $check= false;
-                return false;
             }else if(preg_match($pattern,$value)){
                 $check= false;
-                return false;
             }else{
                 $check= true;
             }

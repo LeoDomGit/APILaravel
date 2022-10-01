@@ -67,6 +67,6 @@ Route::post('/addTag', [TagController::class,'addTag']);
 Route::post('/editTag', [TagController::class,'editTag']);
 Route::post('/deleteTag', [TagController::class,'deleteTag']);
 // ===========================================================
-Route::post('/addProduct', [TagController::class,'addTag']);
+Route::post('/addProduct', [ProductController::class,'create']);
 
 
