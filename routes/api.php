@@ -72,4 +72,6 @@ Route::post('/addProduct', [ProductController::class,'create']);
 Route::post('/addStorages', [StoragesCotroller::class,'addStorages']);
 Route::post('/editStorages', [StoragesCotroller::class,'editStorages']);
 Route::post('/deleteStorages', [StoragesCotroller::class,'deleteStorages']);
+// ==========================================================================
+Route::post('/addProdGallery', [ProductController::class,'addProdGallery']);
 

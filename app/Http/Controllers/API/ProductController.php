@@ -5,6 +5,8 @@ use App\Http\Controllers\BaseController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\productM;
+use App\Models\productGalleryM;
+
 class ProductController extends BaseController
 {
     /**
@@ -12,9 +14,28 @@ class ProductController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function addProdGallery()
     {
-        //
+        $idProd=$_POST['idProd'];
+        if(isset($_POST['idProd'])&&BaseController::checkInt($_POST['idProd'])==true&&$_FILES['files']['name'][0]!=''){
+            $filetype = $_FILES['files']['type'];
+            $accept=['gif', 'jpeg', 'jpg', 'png', 'svg', 'blob','GIF','JPEG','JPG','PNG','SVG','webpimage','WEBIMAGE','webpimage','webpimage','webpimage','webp','WEBP'];
+            $keyarr=[];
+            foreach ($filetype as $key => $value) {
+                if(in_array($value,$accept)){
+                   array_push($keyarr,$key); 
+                }
+            }
+            foreach ($_FILES['files']['name'] as $key1 => $value1) {
+                if(!in_array($key1,$keyarr)){
+                    move_uploaded_file($_FILES['files']['tmp_name'][$key1],'images/'.$value1);
+                    productGalleryM::create(['idProd'=>$idProd,'imagename'=>$value1,'created_at'=>now()]);
+                }
+            }
+            return response()->json(['check'=>true]);
+        }else{
+            return response()->json(['check'=>false,'message'=>'rejected']);
+        }
     }
 
     /**
