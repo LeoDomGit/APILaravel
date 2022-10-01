@@ -13,8 +13,7 @@ class TagController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function addTag(Request $request)
-    {
+    public function addTag(Request $request){
         $tagname=$request->tagname;
         if(BaseController::SQLValidate($tagname)==false){
             return response()->json(['check'=>false,'message'=>'rejected']);

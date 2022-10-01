@@ -9,8 +9,7 @@ use App\Http\Controllers\API\ColorController;
 use App\Http\Controllers\API\SizeController;
 use App\Http\Controllers\API\TagController;
 use App\Http\Controllers\API\ProductController;
-
-
+use App\Http\Controllers\API\StoragesCotroller;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +32,7 @@ Route::get('/allCate', [CateGroryController::class,'showall']);
 Route::get('/allColor', [ColorController::class,'showall']);
 Route::get('/allSize', [SizeController::class,'showall']);
 Route::get('/allTag', [TagController::class,'showall']);
-
+Route::get('/allStorages', [StoragesCotroller::class,'showall']);
 // ===============================================================
 
 Route::post('/register', [UserController::class,'create']);
@@ -69,4 +68,8 @@ Route::post('/deleteTag', [TagController::class,'deleteTag']);
 // ===========================================================
 Route::post('/addProduct', [ProductController::class,'create']);
 
+// ===========================================================
+Route::post('/addStorages', [StoragesCotroller::class,'addStorages']);
+Route::post('/editStorages', [StoragesCotroller::class,'editStorages']);
+Route::post('/deleteStorages', [StoragesCotroller::class,'deleteStorages']);
 
