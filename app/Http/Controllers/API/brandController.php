@@ -6,6 +6,7 @@ use App\Http\Controllers\BaseController;
 use App\Models\brandM;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 class BrandController extends BaseController
 {
     /**
@@ -38,19 +39,19 @@ class BrandController extends BaseController
     public function store(Request $request)
     {
         $brandname = $request->nameBrand;
-        if(BaseController::SQLValidate($brandname)==false){
-            return response()->json(['check'=>false,'message'=>'rejected']);
-        }else if(BaseController::checkExist($brandname,'tbl_brand','brandname')!=0){
-            return response()->json(['check'=>false,'message'=>'exist']);
-        }else{
-            $insertBrand = brandM::create(['brandname'=>trim(ucfirst($brandname))]);
+        if (BaseController::SQLValidate($brandname) == false) {
+            return response()->json(['check' => false, 'message' => 'rejected']);
+        } else if (BaseController::checkExist($brandname, 'tbl_brand', 'brandname') != 0) {
+            return response()->json(['check' => false, 'message' => 'exist']);
+        } else {
+            $insertBrand = brandM::create(['brandname' => trim(ucfirst($brandname))]);
             foreach ($request->cate as $key => $value) {
-                  DB::table('brand_categrory')->insert([
-                    'idBrand' =>$insertBrand->idbrand,
-                    'idCate'=>$value,
-                  ]);
+                DB::table('brand_categrory')->insert([
+                    'idBrand' => $insertBrand->idbrand,
+                    'idCate' => $value,
+                ]);
             }
-            return response()->json(['check'=>true]);
+            return response()->json(['check' => true]);
         }
     }
     /**
@@ -72,17 +73,19 @@ class BrandController extends BaseController
      */
     public function edit(Request $request)
     {
-        $brandname = $request->brandname;
+        $brandname = $request->nameBrand;
         $idBrand = $request->idBrand;
-        if(BaseController::checkInt($idBrand)==false||BaseController::SQLValidate($brandname)==false){
-            return response()->json(['check'=>false,'message'=>'rejected']);
-        }else if( BaseController::checkExist($brandname,'tbl_brand','brandname')!=0){
-            return response()->json(['check'=>false,'message'=>'exist']);
-        }else{
-            DB::Table('tbl_brand')->where('idbrand',$idBrand)->update(['brandname'=>$brandname,'updated_at'=>now()]);
-            return response()->json(['check'=>true]);
+        $checkNameExist = brandM::where('idbrand', '!=', $idBrand)->where('brandname', '=', trim(ucfirst($brandname)))->count();
+        if ($checkNameExist > 0) {
+            return response()->json(['check' => false, 'message' => 'exist']);
         }
-
+        $update = brandM::find($idBrand);
+        $update->update([
+            'brandname' => trim(ucfirst($brandname)),
+            'updated_at' => now()
+        ]);
+        $update->cate()->sync($request->cate);
+        return response()->json(['check' => true]);
     }
 
     /**
@@ -106,15 +109,15 @@ class BrandController extends BaseController
     public function destroy(Request $request)
     {
         $idBrand = $request->idBrand;
-        if(BaseController::checkInt($idBrand)==false){
-            return response()->json(['check'=>false,'message'=>'rejected']);
-        }else if(BaseController::checkExist($idBrand,'tbl_brand','idbrand')==0){
-            return response()->json(['check'=>false,'message'=>'not exist']);
-        }else if((BaseController::checkExist($idBrand,'products','idBrand')!=0)){
-            return response()->json(['check'=>false,'message'=>'fail']);
-        }else {
-            brandM::where('idbrand',$idBrand)->delete();
-            return response()->json(['check'=>true]);
+        if (BaseController::checkInt($idBrand) == false) {
+            return response()->json(['check' => false, 'message' => 'rejected']);
+        } else if (BaseController::checkExist($idBrand, 'tbl_brand', 'idbrand') == 0) {
+            return response()->json(['check' => false, 'message' => 'not exist']);
+        } else if ((BaseController::checkExist($idBrand, 'products', 'idBrand') != 0)) {
+            return response()->json(['check' => false, 'message' => 'fail']);
+        } else {
+            brandM::where('idbrand', $idBrand)->delete();
+            return response()->json(['check' => true]);
         }
     }
 }
