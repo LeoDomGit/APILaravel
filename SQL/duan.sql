@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 29, 2022 at 02:25 AM
+-- Generation Time: Oct 01, 2022 at 03:17 PM
 -- Server version: 10.9.3-MariaDB-log
 -- PHP Version: 8.1.6
 
@@ -87,7 +87,8 @@ CREATE TABLE `colors` (
 
 INSERT INTO `colors` (`id`, `colorName`, `colorpicker`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'Đen', '#000000', 1, '2022-09-28 10:45:31', NULL),
-(2, 'Đỏ', '#ff0000', 1, '2022-09-28 10:45:46', '2022-09-28 10:54:44');
+(2, 'Đỏ', '#ff0000', 1, '2022-09-28 10:45:46', '2022-09-28 10:54:44'),
+(4, 'Trắng', '#ffffff', 1, '2022-09-29 07:10:41', NULL);
 
 -- --------------------------------------------------------
 
@@ -177,6 +178,31 @@ CREATE TABLE `prodtage` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `productgallery`
+--
+
+CREATE TABLE `productgallery` (
+  `idProd` int(11) NOT NULL,
+  `imagename` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prodSet` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `productgallery`
+--
+
+INSERT INTO `productgallery` (`idProd`, `imagename`, `prodSet`, `created_at`, `updated_at`) VALUES
+(4, '3d3f9e9b-cb7a-4792-a943-c76ce5d07fff.webp', 0, '2022-10-01 15:15:10', '2022-10-01 15:15:10'),
+(4, 'c26aecec-ffb0-4fef-988c-01c29a81f49c.webp', 0, '2022-10-01 15:15:10', '2022-10-01 15:15:10'),
+(4, 'd63fce44-0e1d-428c-b80c-762a598a86d6.webp', 0, '2022-10-01 15:15:10', '2022-10-01 15:15:10'),
+(5, 'b3a84ce7-8175-46f2-ad8e-23e2be9e61dc.webp', 0, '2022-10-01 15:16:59', '2022-10-01 15:16:59'),
+(5, 'f0da49f3-d2ac-4c2e-807a-b9a4a8bea04c.webp', 0, '2022-10-01 15:16:59', '2022-10-01 15:16:59');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `products`
 --
 
@@ -193,6 +219,14 @@ CREATE TABLE `products` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `productName`, `summary`, `content`, `status`, `idcate`, `idBrand`, `soLuotXem`, `highlight`, `created_at`, `updated_at`) VALUES
+(4, 'sản phaam1', 'sản phẩm 1', '<p>ABC</p>', 0, 1, 1, 0, 0, '2022-10-01 15:13:21', NULL),
+(5, 'sản phẩm 2', 'sản phẩm test 2', '<p>abc</p>', 0, 1, 1, 0, 0, '2022-10-01 15:16:42', NULL);
 
 -- --------------------------------------------------------
 
@@ -386,6 +420,12 @@ ALTER TABLE `prodtage`
   ADD KEY `prodtage_idtag_foreign` (`idTag`);
 
 --
+-- Indexes for table `productgallery`
+--
+ALTER TABLE `productgallery`
+  ADD PRIMARY KEY (`idProd`,`imagename`);
+
+--
 -- Indexes for table `products`
 --
 ALTER TABLE `products`
@@ -455,7 +495,7 @@ ALTER TABLE `categrory`
 -- AUTO_INCREMENT for table `colors`
 --
 ALTER TABLE `colors`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -485,7 +525,7 @@ ALTER TABLE `prodtage`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `storages`
@@ -503,7 +543,7 @@ ALTER TABLE `tbl_brand`
 -- AUTO_INCREMENT for table `tbl_size`
 --
 ALTER TABLE `tbl_size`
-  MODIFY `idSize` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idSize` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `tbl_tag`
