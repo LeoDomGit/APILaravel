@@ -8,6 +8,7 @@ use App\Http\Controllers\API\CateGroryController;
 use App\Http\Controllers\API\ColorController;
 use App\Http\Controllers\API\SizeController;
 use App\Http\Controllers\API\TagController;
+use App\Http\Controllers\API\ProductController;
 
 
 
@@ -65,5 +66,7 @@ Route::post('/editSize', [SizeController::class,'editSize']);
 Route::post('/addTag', [TagController::class,'addTag']);
 Route::post('/editTag', [TagController::class,'editTag']);
 Route::post('/deleteTag', [TagController::class,'deleteTag']);
+// ===========================================================
+Route::post('/addProduct', [TagController::class,'addTag']);
 
 

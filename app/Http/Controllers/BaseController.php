@@ -52,6 +52,26 @@ class BaseController
      *
      * @return \Illuminate\Http\Response
      */
+    public function SQLValidate2($params)
+    {
+        $arr = $params;
+        $pattern = '/(select|Select|SELECT|update|Update|UPDATE|Delete|DELETE|delete) (.+) from/i ';
+        $check=true;
+        foreach ($arr as $value) {
+            if(trim($value)==''){
+                $check= false;
+                return false;
+            }else if(preg_match($pattern,$value)){
+                $check= false;
+                return false;
+            }else{
+                $check= true;
+            }
+        }
+        return $check;
+        
+    }
+    // ============================================
     public function checkExist($item,$table,$column)
     {
         $check = DB::Table($table)->where($column,$item)->count();
