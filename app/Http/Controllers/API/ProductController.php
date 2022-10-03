@@ -18,7 +18,25 @@ class ProductController extends BaseController
      * @return \Illuminate\Http\Response
      */
 
-
+    public function productDetail(){
+        $idProd = $_POST['idProd'];
+        if(BaseController::checkInt($idProd)==true &&BaseController::checkExist($idProd,'products','id')!=0){
+            $product = DB::SELECT("SELECT products.id as idProd,products.productName as prodName,products.status as prodStatus,products.created_at as prodCreate,products.updated_at as prodUpdate,summary as summary,cateName as cateName,brandname as brandname,products.idBrand as prodBrandId,products.idcate as prodCateId,content as content FROM products inner join tbl_brand on products.idBrand=tbl_brand.idbrand inner join categrory on products.idcate = categrory.idcate where products.id =".$idProd); 
+            $images = DB::Select("select imagename from productgallery where idProd=".$idProd);
+            $images1 = [];
+            foreach ($images as  $value) {
+                array_push($images1,$value);
+            }
+            if(count($product)!=0){
+                return response()->json(['check'=>true,'result'=>$product,'images'=>$images1]);
+            }else{
+                return response()->json(['check'=>'false1']);
+            }
+        }else{
+            return response()->json(['check'=>false]);
+        }
+       
+    }
     /**
      * Display a listing of the resource.
      *
