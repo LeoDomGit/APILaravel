@@ -74,4 +74,7 @@ Route::post('/editStorages', [StoragesCotroller::class,'editStorages']);
 Route::post('/deleteStorages', [StoragesCotroller::class,'deleteStorages']);
 // ==========================================================================
 Route::post('/addProdGallery', [ProductController::class,'addProdGallery']);
+Route::get('/allProduct', [ProductController::class,'allProduct']);
+Route::post('/productDetail', [ProductController::class,'productDetail']);
+
 

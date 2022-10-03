@@ -7,19 +7,37 @@ use Illuminate\Support\Facades\DB;
 use App\Models\productM;
 use App\Models\productGalleryM;
 
+use function PHPSTORM_META\type;
+
 class ProductController extends BaseController
 {
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function allProduct(){
+        $result = DB::Table('products')->join('tbl_brand','products.idBrand','=','tbl_brand.idbrand')->join('categrory','products.idcate','=','categrory.idcate')->select('products.id as idProd','products.productName as prodName','products.status as prodStatus','products.created_at as prodCreate','products.updated_at as prodUpdate','summary as summary','cateName as cateName','brandname as brandname','products.idBrand as prodBrandId','products.content','products.idcate as prodCateId')->get();
+        return response()->json($result);
+    }
+    /*
+    ============
+               ============
+    */
     public function addProdGallery()
     {
         $idProd=$_POST['idProd'];
         if(isset($_POST['idProd'])&&BaseController::checkInt($_POST['idProd'])==true&&$_FILES['files']['name'][0]!=''){
             $filetype = $_FILES['files']['type'];
-            $accept=['gif', 'jpeg', 'jpg', 'png', 'svg', 'blob','GIF','JPEG','JPG','PNG','SVG','webpimage','WEBIMAGE','webpimage','webpimage','webpimage','webp','WEBP'];
+            $accept=['gif', 'jpeg', 'jpg', 'png', 'svg','jfif','JFIF', 'blob','GIF','JPEG','JPG','PNG','SVG','webpimage','WEBIMAGE','webpimage','webpimage','webpimage','webp','WEBP'];
             $keyarr=[];
             foreach ($filetype as $key => $value) {
                 if(in_array($value,$accept)){
