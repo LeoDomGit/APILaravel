@@ -79,6 +79,34 @@ class ProductController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
+    public function addProdGallery2()
+    {
+        $idProd=$_POST['idProd'];
+        if(isset($_POST['idProd'])&&BaseController::checkInt($_POST['idProd'])==true&&$_FILES['files']['name'][0]!=''){
+            $filetype = $_FILES['files']['type'];
+            $accept=['gif', 'jpeg', 'jpg', 'png', 'svg','jfif','JFIF', 'blob','GIF','JPEG','JPG','PNG','SVG','webpimage','WEBIMAGE','webpimage','webpimage','webpimage','webp','WEBP'];
+            $keyarr=[];
+            foreach ($filetype as $key => $value) {
+                if(in_array($value,$accept)){
+                   array_push($keyarr,$key); 
+                }
+            }
+            foreach ($_FILES['files']['name'] as $key1 => $value1) {
+                if(!in_array($key1,$keyarr)){
+                    if(productGalleryM::where('imagename','=',$value1)->count()==0){
+                        move_uploaded_file($_FILES['files']['tmp_name'][$key1],'images/'.$value1);
+                        productGalleryM::create(['idProd'=>$idProd,'imagename'=>$value1,'created_at'=>now()]);
+                    }
+                }
+            }
+            return response()->json(['check'=>true]);
+        }else{
+            return response()->json(['check'=>false,'message'=>'rejected']);
+        }
+    }
+   
+     // ==========================================================
+
     public function create(Request $request)
     {
         $prodName=$request->prodName;
