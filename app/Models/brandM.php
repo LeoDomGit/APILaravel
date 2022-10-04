@@ -15,4 +15,8 @@ class brandM extends Model
     {
         return $this->belongsToMany(cateM::class, "brand_categrory", "idBrand", "idCate");
     }
+    public function prod()
+    {
+        return $this->hasMany(productM::class,"idBrand","idbrand");
+    }
 }

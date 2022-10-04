@@ -10,5 +10,9 @@ class productGalleryM extends Model
     protected $table = 'productgallery';
     protected $fillable = ['idProd','imagename','prodSet','created_at','updated_at'];
     use HasFactory;
-    use HasFactory;
+    
+    public function prod()
+    {
+        return $this->belongsTo(productM::class,'idProd','id');
+    }
 }

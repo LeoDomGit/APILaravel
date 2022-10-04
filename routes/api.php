@@ -67,7 +67,7 @@ Route::post('/editTag', [TagController::class,'editTag']);
 Route::post('/deleteTag', [TagController::class,'deleteTag']);
 // ===========================================================
 Route::post('/addProduct', [ProductController::class,'create']);
-
+Route::post('/GetBRandByCate',[ProductController::class,'GetBrandByCategrory']);
 // ===========================================================
 Route::post('/addStorages', [StoragesCotroller::class,'addStorages']);
 Route::post('/editStorages', [StoragesCotroller::class,'editStorages']);
@@ -77,5 +77,6 @@ Route::post('/addProdGallery', [ProductController::class,'addProdGallery']);
 Route::get('/allProduct', [ProductController::class,'allProduct']);
 Route::post('/productDetail', [ProductController::class,'productDetail']);
 Route::post('/updateProductGaller', [ProductController::class,'addProdGallery2']);
+Route::post('/updateProduct',[ProductController::class,'updateProd']);
 
 
