@@ -89,6 +89,7 @@ class ProductController extends BaseController
         }
         return response()->json($output);
     }
+    
     public function addProdGallery2()
     {
         $idProd = $_POST['idProd'];
