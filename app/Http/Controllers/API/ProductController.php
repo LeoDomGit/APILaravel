@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\productM;
 use App\Models\productGalleryM;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Str;
 use function PHPSTORM_META\type;
 
 class ProductController extends BaseController
@@ -89,26 +89,23 @@ class ProductController extends BaseController
         }
         return response()->json($output);
     }
-    
-    public function addProdGallery2()
+
+    public function addProdGallery2(Request $request)
     {
-        $idProd = $_POST['idProd'];
-        if (isset($_POST['idProd']) && BaseController::checkInt($_POST['idProd']) == true && $_FILES['files']['name'][0] != '') {
-            $filetype = $_FILES['files']['type'];
-            $accept = ['gif', 'jpeg', 'jpg', 'png', 'svg', 'jfif', 'JFIF', 'blob', 'GIF', 'JPEG', 'JPG', 'PNG', 'SVG', 'webpimage', 'WEBIMAGE', 'webpimage', 'webpimage', 'webpimage', 'webp', 'WEBP'];
-            $keyarr = [];
-            foreach ($filetype as $key => $value) {
-                if (in_array($value, $accept)) {
-                    array_push($keyarr, $key);
-                }
-            }
-            foreach ($_FILES['files']['name'] as $key1 => $value1) {
-                if (!in_array($key1, $keyarr)) {
-                    if (productGalleryM::where('imagename', '=', $value1)->count() == 0) {
-                        move_uploaded_file($_FILES['files']['tmp_name'][$key1], 'images/' . $value1);
-                        productGalleryM::create(['idProd' => $idProd, 'imagename' => $value1, 'created_at' => now()]);
-                    }
-                }
+        if ($request->hasFile('files')) {
+            $idProd = $request->idProd;
+            $dataProd = productM::find($idProd);
+            $files = $request->file('files');
+            foreach ($files as $key => $file) {
+                $nameFile = $file->getClientOriginalName();
+                $FileName = $key . "-" . time() . "_" . substr(md5($dataProd->id), 0, 6) . "." . explode(".", $nameFile)[1];
+                $file->move("images", $FileName);
+                productGalleryM::create([
+                    'idProd' => $idProd,
+                    'imagename' => $FileName,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
             }
             return response()->json(['check' => true]);
         } else {
