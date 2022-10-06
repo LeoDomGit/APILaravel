@@ -196,29 +196,29 @@ class ProductController extends BaseController
     {
 
         $validation = Validator::make($request->all(), [
-            'nameProd' => 'required',
-            'summaryProd' => 'required',
-            'brandProd' => 'required',
+            'prodNameedit' => 'required',
+            'summaryedit' => 'required',
+            'brandIDedit' => 'required',
         ], [
-            'nameProd.required' => 'Vui lòng nhập tên !',
-            'summaryProd.required' => 'Vui lòng nhập tóm tắt !',
-            'brandProd.required' => 'Vui lòng chọn thương hiệu !'
+            'prodNameedit.required' => 'Vui lòng nhập tên !',
+            'summaryedit.required' => 'Vui lòng nhập tóm tắt !',
+            'brandIDedit.required' => 'Vui lòng chọn thương hiệu !'
         ]);
         if ($validation->fails()) {
             return response()->json(['status' => 204, 'msg' => $validation->errors()]);
         }
-        $checkName = productM::where('productName', '=', trim(ucfirst($request->nameProd)))->where('id', '!=', $request->id)->count();
+        $checkName = productM::where('productName', '=', trim(ucfirst($request->prodNameedit)))->where('id', '!=', $request->id)->count();
         if ($checkName > 0) {
             return response()->json(['status' => 202, 'msg' => 'Tên sản phẩm đã có vui lòng chọn tên khác !']);
         }
 
         $update = productM::find($request->id);
         $update->update([
-            'productName' => trim(ucfirst($request->nameProd)),
-            'summary' => trim($request->summaryProd),
-            'content' => trim($request->contentProd),
-            'idcate' => $request->cateProd,
-            'idBrand' => $request->brandProd,
+            'productName' => trim(ucfirst($request->prodNameedit)),
+            'summary' => trim($request->summaryedit),
+            'content' => trim($request->descedit),
+            'idcate' => $request->prodTypeIDedit,
+            'idBrand' => $request->brandIDedit,
             'updated_at' => now()
         ]);
         if ($update) {
