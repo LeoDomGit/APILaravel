@@ -14,7 +14,23 @@ use function PHPSTORM_META\type;
 
 class ProductController extends BaseController
 {
-
+    public function switchSP(Request $request){
+            $idProd = $request->idSP;
+            if(BaseController::checkInt($idProd)==false||BaseController::checkExist($idProd,'products','id')==0){
+                return response()->json(['check'=>false,'message'=>'notexist']);
+            }else{
+                $old = productM::where('id','=',$idProd)->value('status');
+                if($old==0){
+                    productM::where('id','=',$idProd)->update(['status'=>1,'updated_at'=>now()]);
+                    return response()->json(['check'=>true]);
+                }else{
+                    productM::where('id','=',$idProd)->update(['status'=>0,'updated_at'=>now()]);
+                    return response()->json(['check'=>true]);
+                
+                }
+            }
+    }
+    // ====================================================
     public function updateProduct(Request $request){
        
 
