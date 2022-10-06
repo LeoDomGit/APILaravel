@@ -43,7 +43,7 @@ class ProductController extends BaseController
      */
     public function allProduct()
     {
-        $result = productM::with('cate', 'brand')->get();
+        $result = DB::Table('products')->join('tbl_brand','products.idBrand','=','tbl_brand.idbrand')->join('categrory','products.idcate','=','categrory.idcate')->select('products.id as idProd','products.productName as prodName','products.status as prodStatus','products.created_at as prodCreate','products.updated_at as prodUpdate','summary as summary','cateName as cateName','brandname as brandname','products.idBrand as prodBrandId','products.content','products.idcate as prodCateId')->get();
         return response()->json($result);
     }
     /*
