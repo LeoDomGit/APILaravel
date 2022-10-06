@@ -15,6 +15,59 @@ use function PHPSTORM_META\type;
 class ProductController extends BaseController
 {
 
+    public function updateProduct(Request $request){
+       
+
+        $validation = Validator::make($request->all(), [
+            'id'=>'required|numeric',
+            'prodName'=>'required',
+            'summary' => 'required',
+            'prodTypeID' => 'required|numeric',
+            'brandID' => 'required|numeric',
+            'desc' => 'required',
+            
+        ]);
+        if($validation->fails()){
+            return response()->json(['check'=>false]);
+        }else{
+            $id= $request->id;
+            $prodName= $request->prodName;
+            $summary= $request->summary;
+            $prodTypeID= $request->prodTypeID;
+            $brandID= $request->brandID;
+            $desc= $request->desc;
+            $check1= productM::where('id','=',$id)->count();
+            $check2= productM::where('productName','=',$prodName)->count();
+            if($check1==0){
+            return response()->json(['check'=>false,'message'=>'notexist']);
+            }else if($check2!=0){ 
+                return response()->json(['check'=>false,'message'=>'exist']);
+            }else{
+                productM::where('id','=',$id)->update(['productName'=>$prodName,'summary'=>$summary,'content'=>$desc,'status'=>0,'idcate'=>$prodTypeID,'idBrand'=>$brandID,'updated_at'=>now()]);
+                return response()->json(['check'=>true]);
+            }
+            
+        }
+    }
+    // ==================================================
+
+
+    public function deleteImage(){
+        $imagename= $_POST['imageName'];
+        if(BaseController::SQLValidate($imagename)==false){
+            return response()->json(['check'=>false]);
+        }else{
+            $file_path= public_path('images/'.$imagename);
+            if(file_exists($file_path)){
+                unlink($file_path);
+            }
+            productGalleryM::where('imagename','=',$imagename)->delete();
+            return response()->json(['check'=>true]);
+        }
+    }
+    // ===================================
+
+
     /**
      * Display a listing of the resource.
      *

@@ -78,6 +78,8 @@ Route::get('/allProduct', [ProductController::class,'allProduct']);
 Route::post('/productDetail', [ProductController::class,'productDetail']);
 Route::post('/updateProductGaller', [ProductController::class,'addProdGallery2']);
 Route::post('/updateProduct',[ProductController::class,'updateProd']);
-// Route::post('/updateProduct',[ProductController::class,'updateProd']);
+Route::post('/deleteImage',[ProductController::class,'deleteImage']);
+// Route::post('/updateProduct',[ProductController::class,'updateProduct']);
+Route::post('/editProduct',[ProductController::class,'updateProduct']);
 
 
