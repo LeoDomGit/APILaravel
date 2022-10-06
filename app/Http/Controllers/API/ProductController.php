@@ -34,7 +34,7 @@ class ProductController extends BaseController
             if(count($product)!=0){
                 return response()->json(['check'=>true,'result'=>$product,'images'=>$images1]);
             }else{
-                return response()->json(['check'=>'false1']);
+                return response()->json(['check'=>false]);
             }
         }else{
             return response()->json(['check'=>false]);
@@ -94,27 +94,40 @@ class ProductController extends BaseController
         return response()->json($output);
     }
 
-    public function addProdGallery2(Request $request)
+    public function addProdGallery2()
     {
-        if ($request->hasFile('files')) {
-            $idProd = $request->idProd;
-            $dataProd = productM::find($idProd);
-            $files = $request->file('files');
-            foreach ($files as $key => $file) {
-                $nameFile = $file->getClientOriginalName();
-                $FileName = $key . "-" . time() . "_" . substr(md5($dataProd->id), 0, 6) . "." . explode(".", $nameFile)[1];
-                $file->move("images", $FileName);
-                productGalleryM::create([
-                    'idProd' => $idProd,
-                    'imagename' => $FileName,
-                    'created_at' => now(),
-                    'updated_at' => now()
-                ]);
+        if(BaseController::checkInt($_POST['idProd']==false)){
+            return response()->json(['check'=>false,'message'=>'rejected']);
+        }else{
+            $idProd= $_POST['idProd'];
+            $arr=DB::Table('productgallery')->where('idProd',$idProd)->select('imagename')->get();
+            foreach ($arr as  $value) {
+                foreach ($value as $value2) {
+                $file_path= public_path('images/'.$value2);
+                echo $file_path;
+                if(file_exists($file_path)){
+                    unlink($file_path);
+                }
+                }
             }
-            return response()->json(['check' => true]);
-        } else {
-            return response()->json(['check' => false, 'message' => 'rejected']);
+            productGalleryM::where('idProd','=',$idProd)->delete();
+            $filetype = $_FILES['files']['type'];
+            $accept = ['gif', 'jpeg', 'jpg', 'png', 'svg', 'jfif', 'JFIF', 'blob', 'GIF', 'JPEG', 'JPG', 'PNG', 'SVG', 'webpimage', 'WEBIMAGE', 'webpimage', 'webpimage', 'webpimage', 'webp', 'WEBP'];
+            $keyarr = [];
+            foreach ($filetype as $key => $value) {
+                if (in_array($value, $accept)) {
+                    array_push($keyarr, $key);
+                }
+            }
+            foreach ($_FILES['files']['name'] as $key1 => $value1) {
+                if (!in_array($key1, $keyarr)) {
+                    move_uploaded_file($_FILES['files']['tmp_name'][$key1], 'images/' . $value1);
+                    productGalleryM::create(['idProd' => $idProd, 'imagename' => $value1, 'created_at' => now()]);
+                }
+            }
+            return response()->json(['check'=>true]);
         }
+       
     }
 
     // ==========================================================
