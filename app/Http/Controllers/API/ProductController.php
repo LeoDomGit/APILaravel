@@ -14,71 +14,72 @@ use function PHPSTORM_META\type;
 
 class ProductController extends BaseController
 {
-    public function switchSP(Request $request){
-            $idProd = $request->idSP;
-            if(BaseController::checkInt($idProd)==false||BaseController::checkExist($idProd,'products','id')==0){
-                return response()->json(['check'=>false,'message'=>'notexist']);
-            }else{
-                $old = productM::where('id','=',$idProd)->value('status');
-                if($old==0){
-                    productM::where('id','=',$idProd)->update(['status'=>1,'updated_at'=>now()]);
-                    return response()->json(['check'=>true]);
-                }else{
-                    productM::where('id','=',$idProd)->update(['status'=>0,'updated_at'=>now()]);
-                    return response()->json(['check'=>true]);
-                
-                }
+    public function switchSP(Request $request)
+    {
+        $idProd = $request->idSP;
+        if (BaseController::checkInt($idProd) == false || BaseController::checkExist($idProd, 'products', 'id') == 0) {
+            return response()->json(['check' => false, 'message' => 'notexist']);
+        } else {
+            $old = productM::where('id', '=', $idProd)->value('status');
+            if ($old == 0) {
+                productM::where('id', '=', $idProd)->update(['status' => 1, 'updated_at' => now()]);
+                return response()->json(['check' => true]);
+            } else {
+                productM::where('id', '=', $idProd)->update(['status' => 0, 'updated_at' => now()]);
+                return response()->json(['check' => true]);
             }
+        }
     }
     // ====================================================
-    public function updateProduct(Request $request){
-       
+    public function updateProduct(Request $request)
+    {
+
 
         $validation = Validator::make($request->all(), [
-            'id'=>'required|numeric',
-            'prodName'=>'required',
+            'id' => 'required|numeric',
+            'prodName' => 'required',
             'summary' => 'required',
             'prodTypeID' => 'required|numeric',
             'brandID' => 'required|numeric',
             'desc' => 'required',
-            
+
         ]);
-        if($validation->fails()){
-            return response()->json(['check'=>false]);
-        }else{
-            $id= $request->id;
-            $prodName= $request->prodName;
-            $summary= $request->summary;
-            $prodTypeID= $request->prodTypeID;
-            $brandID= $request->brandID;
-            $desc= $request->desc;
-            $check1= productM::where('id','=',$id)->count();
-            $check2= productM::where('productName','=',$prodName)->count();
-            if($check1==0){
-            return response()->json(['check'=>false,'message'=>'notexist']);
-            }else if($check2!=0){ 
-                return response()->json(['check'=>false,'message'=>'exist']);
-            }else{
-                productM::where('id','=',$id)->update(['productName'=>$prodName,'summary'=>$summary,'content'=>$desc,'status'=>0,'idcate'=>$prodTypeID,'idBrand'=>$brandID,'updated_at'=>now()]);
-                return response()->json(['check'=>true]);
+        if ($validation->fails()) {
+            return response()->json(['check' => false]);
+        } else {
+            $id = $request->id;
+            $prodName = $request->prodName;
+            $summary = $request->summary;
+            $prodTypeID = $request->prodTypeID;
+            $brandID = $request->brandID;
+            $desc = $request->desc;
+            $check1 = productM::where('id', '=', $id)->count();
+            $check2 = productM::where('productName', '=', $prodName)->count();
+            if ($check1 == 0) {
+                return response()->json(['check' => false, 'message' => 'notexist']);
+            } else if ($check2 != 0) {
+                return response()->json(['check' => false, 'message' => 'exist']);
+            } else {
+                productM::where('id', '=', $id)->update(['productName' => $prodName, 'summary' => $summary, 'content' => $desc, 'status' => 0, 'idcate' => $prodTypeID, 'idBrand' => $brandID, 'updated_at' => now()]);
+                return response()->json(['check' => true]);
             }
-            
         }
     }
     // ==================================================
 
 
-    public function deleteImage(){
-        $imagename= $_POST['imageName'];
-        if(BaseController::SQLValidate($imagename)==false){
-            return response()->json(['check'=>false]);
-        }else{
-            $file_path= public_path('images/'.$imagename);
-            if(file_exists($file_path)){
+    public function deleteImage()
+    {
+        $imagename = $_POST['imageName'];
+        if (BaseController::SQLValidate($imagename) == false) {
+            return response()->json(['check' => false]);
+        } else {
+            $file_path = public_path('images/' . $imagename);
+            if (file_exists($file_path)) {
                 unlink($file_path);
             }
-            productGalleryM::where('imagename','=',$imagename)->delete();
-            return response()->json(['check'=>true]);
+            productGalleryM::where('imagename', '=', $imagename)->delete();
+            return response()->json(['check' => true]);
         }
     }
     // ===================================
@@ -93,20 +94,20 @@ class ProductController extends BaseController
     public function productDetail()
     {
         $idProd = $_POST['idProd'];
-        if(BaseController::checkInt($idProd)==true &&BaseController::checkExist($idProd,'products','id')!=0){
-            $product = DB::SELECT("SELECT products.id as idProd,products.productName as prodName,products.status as prodStatus,products.created_at as prodCreate,products.updated_at as prodUpdate,summary as summary,cateName as cateName,brandname as brandname,products.idBrand as prodBrandId,products.idcate as prodCateId,content as content FROM products inner join tbl_brand on products.idBrand=tbl_brand.idbrand inner join categrory on products.idcate = categrory.idcate where products.id =".$idProd); 
-            $images = DB::Select("select imagename from productgallery where idProd=".$idProd);
+        if (BaseController::checkInt($idProd) == true && BaseController::checkExist($idProd, 'products', 'id') != 0) {
+            $product = DB::SELECT("SELECT products.id as idProd,products.productName as prodName,products.status as prodStatus,products.created_at as prodCreate,products.updated_at as prodUpdate,summary as summary,cateName as cateName,brandname as brandname,products.idBrand as prodBrandId,products.idcate as prodCateId,content as content FROM products inner join tbl_brand on products.idBrand=tbl_brand.idbrand inner join categrory on products.idcate = categrory.idcate where products.id =" . $idProd);
+            $images = DB::Select("select imagename from productgallery where idProd=" . $idProd);
             // $images1 = [];
             // foreach ($images as  $value) {
             //     array_push($images1,$value);
             // }
-            if(count($product)!=0){
-                return response()->json(['check'=>true,'result'=>$product,'images'=>$images]);
-            }else{
-                return response()->json(['check'=>false]);
+            if (count($product) != 0) {
+                return response()->json(['check' => true, 'result' => $product, 'images' => $images]);
+            } else {
+                return response()->json(['check' => false]);
             }
-        }else{
-            return response()->json(['check'=>false]);
+        } else {
+            return response()->json(['check' => false]);
         }
     }
     /**
@@ -116,7 +117,7 @@ class ProductController extends BaseController
      */
     public function allProduct()
     {
-        $result = DB::Table('products')->join('tbl_brand','products.idBrand','=','tbl_brand.idbrand')->join('categrory','products.idcate','=','categrory.idcate')->select('products.id as idProd','products.productName as prodName','products.status as prodStatus','products.created_at as prodCreate','products.updated_at as prodUpdate','summary as summary','cateName as cateName','brandname as brandname','products.idBrand as prodBrandId','products.content','products.idcate as prodCateId')->get();
+        $result = DB::Table('products')->join('tbl_brand', 'products.idBrand', '=', 'tbl_brand.idbrand')->join('categrory', 'products.idcate', '=', 'categrory.idcate')->select('products.id as idProd', 'products.productName as prodName', 'products.status as prodStatus', 'products.created_at as prodCreate', 'products.updated_at as prodUpdate', 'summary as summary', 'cateName as cateName', 'brandname as brandname', 'products.idBrand as prodBrandId', 'products.content', 'products.idcate as prodCateId')->get();
         return response()->json($result);
     }
     /*
@@ -165,21 +166,21 @@ class ProductController extends BaseController
 
     public function addProdGallery2()
     {
-        if(BaseController::checkInt($_POST['idProd']==false)){
-            return response()->json(['check'=>false,'message'=>'rejected']);
-        }else{
-            $idProd= $_POST['idProd'];
-            $arr=DB::Table('productgallery')->where('idProd',$idProd)->select('imagename')->get();
+        if (BaseController::checkInt($_POST['idProd'] == false)) {
+            return response()->json(['check' => false, 'message' => 'rejected']);
+        } else {
+            $idProd = $_POST['idProd'];
+            $arr = DB::Table('productgallery')->where('idProd', $idProd)->select('imagename')->get();
             foreach ($arr as  $value) {
                 foreach ($value as $value2) {
-                $file_path= public_path('images/'.$value2);
-                echo $file_path;
-                if(file_exists($file_path)){
-                    unlink($file_path);
-                }
+                    $file_path = public_path('images/' . $value2);
+                    echo $file_path;
+                    if (file_exists($file_path)) {
+                        unlink($file_path);
+                    }
                 }
             }
-            productGalleryM::where('idProd','=',$idProd)->delete();
+            productGalleryM::where('idProd', '=', $idProd)->delete();
             $filetype = $_FILES['files']['type'];
             $accept = ['gif', 'jpeg', 'jpg', 'png', 'svg', 'jfif', 'JFIF', 'blob', 'GIF', 'JPEG', 'JPG', 'PNG', 'SVG', 'webpimage', 'WEBIMAGE', 'webpimage', 'webpimage', 'webpimage', 'webp', 'WEBP'];
             $keyarr = [];
@@ -194,10 +195,8 @@ class ProductController extends BaseController
                     productGalleryM::create(['idProd' => $idProd, 'imagename' => $value1, 'created_at' => now()]);
                 }
             }
-            return response()->json(['check'=>200]);
+            return response()->json(['check' => 200]);
         }
-
-       
     }
 
     // ==========================================================
