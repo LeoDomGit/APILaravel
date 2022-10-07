@@ -194,8 +194,9 @@ class ProductController extends BaseController
                     productGalleryM::create(['idProd' => $idProd, 'imagename' => $value1, 'created_at' => now()]);
                 }
             }
-            return response()->json(['check'=>true]);
+            return response()->json(['check'=>200]);
         }
+
        
     }
 
