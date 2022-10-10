@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\BaseController;
 use App\Models\User;
 use App\Models\UserRole;
+use App\Models\LoginM;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -112,9 +113,24 @@ class UserController extends BaseController
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
-    {
-        //
+    public function checkEmail(Request $request){
+        $email = $request->email;
+        $google_id = $request->google_id;
+        $image = $request->image;
+        $name = $request->name;
+        $check = User::where('email','=',$email)->count('id');
+        if($check==0){
+            return false;
+        }else{
+            $idUser= User::where('email','=',$email)->value('id');
+            if(LoginM::where('idUser','=',$idUser)->count('idUser')==0){
+            User::where('email','=',$email)->update(['image'=>$image,'fullName'=>$name,'email_verified_at'=>now(),'ggId'=>$google_id,'updated_at'=>now()]);
+            LoginM::create(['idUser'=>$idUser,'created_at'=>now()]);
+            return true;
+            }else{
+                return true;
+            }
+        }
     }
 
     /**

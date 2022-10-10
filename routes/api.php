@@ -33,12 +33,14 @@ Route::get('/allColor', [ColorController::class,'showall']);
 Route::get('/allSize', [SizeController::class,'showall']);
 Route::get('/allTag', [TagController::class,'showall']);
 Route::get('/allStorages', [StoragesCotroller::class,'showall']);
+
+
 // ===============================================================
 
 Route::post('/register', [UserController::class,'create']);
 Route::post('/addUserRole', [UserController::class,'addUserRole']);
 Route::post('/deleteRole', [UserController::class,'deleteRole']);
-
+Route::post('checkEmail',[UserController::class,'checkEmail']);
 // ==============================================================
 
 Route::post('/addBrand', [brandController::class,'store']);
