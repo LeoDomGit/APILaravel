@@ -120,15 +120,15 @@ class UserController extends BaseController
         $name = $request->name;
         $check = User::where('email','=',$email)->count('id');
         if($check==0){
-            return false;
+            return response()->json(false);
         }else{
             $idUser= User::where('email','=',$email)->value('id');
             if(LoginM::where('idUser','=',$idUser)->count('idUser')==0){
             User::where('email','=',$email)->update(['image'=>$image,'fullName'=>$name,'email_verified_at'=>now(),'ggId'=>$google_id,'updated_at'=>now()]);
             LoginM::create(['idUser'=>$idUser,'created_at'=>now()]);
-            return true;
+            return response()->json(true);
             }else{
-                return true;
+                return response()->json(true);
             }
         }
     }
