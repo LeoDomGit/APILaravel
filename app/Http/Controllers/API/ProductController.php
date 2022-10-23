@@ -208,7 +208,9 @@ class ProductController extends BaseController
         $prodTypeID = $request->prodTypeID;
         $brandID = $request->brandID;
         $desc = $request->desc;
-        $params = [$prodName, $summary, $prodTypeID, $brandID, $desc];
+        $price = $request->price;
+        $discount = $request->discount;
+        $params = [$prodName, $summary, $prodTypeID, $brandID, $desc, $price, $discount];
         if (BaseController::SQLValidate2($params) == false) {
             return response()->json(['check' => false, 'message' => 'rejected']);
         } else if (BaseController::checkInt($prodTypeID) == false || BaseController::checkInt($brandID) == false || BaseController::checkExist($prodTypeID, 'categrory', 'idcate') == 0 || BaseController::checkExist($brandID, 'tbl_brand', 'idbrand') == 0) {
@@ -216,7 +218,7 @@ class ProductController extends BaseController
         } else if (BaseController::checkExist($prodName, 'products', 'productName') != 0) {
             return response()->json(['check' => false, 'message' => 'exist']);
         } else {
-            $lastInsertID = DB::table('products')->insertGetId(['productName' => $prodName, 'summary' => $summary, 'content' => $desc, 'idcate' => $prodTypeID, 'idBrand' => $brandID, 'created_at' => now()]);
+            $lastInsertID = DB::table('products')->insertGetId(['productName' => $prodName, 'summary' => $summary, 'content' => $desc, 'idcate' => $prodTypeID, 'idBrand' => $brandID,'price'=>$price,'discount'=>$discount, 'created_at' => now()]);
             return response()->json(['check' => true, 'id' => $lastInsertID]);
         }
     }
