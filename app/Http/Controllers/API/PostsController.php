@@ -17,7 +17,8 @@ class PostsController extends Controller
      */
     public function allPosts()
     {
-        return response()->json(['status' => 200]);
+        $result = postsM::all();
+        return response()->json($result);
     }
     public function index()
     {
@@ -32,7 +33,7 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-       
+
         $checkTitleExists = postsM::where('slugPosts', '=', $request->slug)->count();
         if ($checkTitleExists > 0) {
             return response()->json(['status' => 202, 'msg' => 'Bài viết đã tồn hãy chọn bài viết khác !']);
@@ -42,7 +43,7 @@ class PostsController extends Controller
         $newName = time() . $request->slug . substr(md5(rand()), 0, 5) . "." . explode(".", $namefile)[1];
         $file->move('images/posts', $newName);
         $insert = postsM::create([
-            'idcatePosts'=>$request->cate,
+            'idcatePosts' => $request->cate,
             'titlePosts' => trim($request->title),
             'slugPosts' => $request->slug,
             'summaryPosts' => trim($request->summary),
@@ -53,11 +54,11 @@ class PostsController extends Controller
             'contentPosts' => $request->content,
             'created_at' => now()
         ]);
-        if($insert){
+        if ($insert) {
             return response()->json(['status' => 200, 'msg' => 'Bài viết đã được thêm thành công !']);
         }
     }
-    
+
     public function allCatePosts()
     {
         $result = CatePosts::all();
