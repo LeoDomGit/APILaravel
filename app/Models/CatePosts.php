@@ -11,4 +11,8 @@ class CatePosts extends Model
     protected $table = 'cate_posts';
     protected $primaryKey = 'id';
     protected $fillable = ['id','nameCatePosts','slugCatePost','logo','der','created_at','updated_at'];
+    public function posts()
+    {
+        return $this->hasMany(postsM::class,'idcatePosts','id');
+    }
 }
