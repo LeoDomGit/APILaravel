@@ -17,13 +17,14 @@ class PostsController extends Controller
      */
     public function allPosts()
     {
-        $result = postsM::all();
+        $result = postsM::whereNull('deleted_at')->get();
         return response()->json($result);
     }
     public function index()
     {
         //
     }
+
 
     /**
      * Store a newly created resource in storage.
