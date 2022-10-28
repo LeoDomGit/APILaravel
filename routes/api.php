@@ -85,7 +85,7 @@ Route::post('/deleteImage',[ProductController::class,'deleteImage']);
 Route::post('/switchSP',[ProductController::class,'switchSP']);
 Route::post('/editProduct',[ProductController::class,'updateProduct']);
 // ==========================================================================
-
+Route::post('/addPosts',[PostsController::class,'store']);
 
 // ==========================================================================
 
