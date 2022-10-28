@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 28, 2022 lúc 10:54 AM
+-- Thời gian đã tạo: Th10 28, 2022 lúc 11:20 AM
 -- Phiên bản máy phục vụ: 10.4.24-MariaDB
 -- Phiên bản PHP: 8.1.6
 
@@ -85,6 +85,13 @@ CREATE TABLE `cate_posts` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `cate_posts`
+--
+
+INSERT INTO `cate_posts` (`id`, `nameCatePosts`, `slugCatePost`, `logo`, `der`, `created_at`, `updated_at`) VALUES
+(1, 'Thời trang 24/7', 'thoi-trang-247', NULL, NULL, '2022-10-28 09:19:18', NULL);
 
 -- --------------------------------------------------------
 
@@ -1540,7 +1547,7 @@ ALTER TABLE `categrory`
 -- AUTO_INCREMENT cho bảng `cate_posts`
 --
 ALTER TABLE `cate_posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT cho bảng `colors`
@@ -1570,7 +1577,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT cho bảng `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT cho bảng `prodstorage`

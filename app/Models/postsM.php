@@ -10,5 +10,5 @@ class postsM extends Model
     use HasFactory;
     protected $table = 'posts';
     protected $primaryKey = 'id';
-    protected $fillable = ['idbrand', 'idcatePosts', 'titlePosts', 'slugPosts', 'summaryPosts','imagePosts','tagsPosts','contentPosts','viewPosts','statusPosts','created_at','updated_at','deleted_at'];
+    protected $fillable = ['id', 'idcatePosts', 'titlePosts', 'slugPosts', 'summaryPosts','imagePosts','tagsPosts','contentPosts','viewPosts','statusPosts','created_at','updated_at','deleted_at'];
 }
