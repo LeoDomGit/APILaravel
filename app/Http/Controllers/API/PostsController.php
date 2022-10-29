@@ -33,13 +33,23 @@ class PostsController extends Controller
          }
          return response()->json(['status'=>200]);
     }
-    
+    public function restoreSinglePostTrash(Request $request)
+    {
+        postsM::withTrashed()->where('id','=',$request->id)->restore();
+        return response()->json(['status'=>200]);
+    }
     public function deleteForce(Request $request)
     {
          foreach ($request->arr as $key => $value) {
              postsM::withTrashed()->where('id','=',$value)->forceDelete();
          }
          return response()->json(['status'=>200]);
+    }
+
+    public function deleteForeSinglePost(Request $request)
+    {
+        postsM::withTrashed()->where('id','=',$request->id)->forceDelete();
+        return response()->json(['status'=>200]);
     }
     public function index()
     {
@@ -93,6 +103,13 @@ class PostsController extends Controller
        }
        return response()->json(['status'=>200]);
     }
+
+
+    public function softDeleteSinglePost(Request $request)
+    {
+        postsM::find($request->id)->delete();
+        return response()->json(['status'=>200]);
+    }
     /**
      * Display the specified resource.
      *
@@ -119,7 +136,7 @@ class PostsController extends Controller
         }
 
         $update = postsM::find($request->id);
-        if ($request->hasFile('image-file')) {
+        if ($request->hasFile('file-image')) {
             $file = $request->file('file-image');
             $namefile = $file->getClientOriginalName();
             $newName = time() . $request->slug . substr(md5(rand()), 0, 5) . "." . explode(".", $namefile)[1];

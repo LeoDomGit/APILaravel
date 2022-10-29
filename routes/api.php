@@ -92,5 +92,8 @@ Route::post('/deleteSoftPosts',[PostsController::class,'softDelete']);
 Route::get('/trashPosts',[PostsController::class,'loadTrash']);
 Route::post('/restoreArrTrash',[PostsController::class,'restoreTrashByArr']);
 Route::post('/deleteForeceArrTrash',[PostsController::class,'deleteForce']);
+Route::post('/deleteSoftSinglePost',[PostsController::class,'softDeleteSinglePost']);
+Route::post('/restoreSinglePost',[PostsController::class,'restoreSinglePostTrash']);
+Route::post('/deleteForeSinglePost',[PostsController::class,'deleteForeSinglePost']);
 // ==========================================================================
 
