@@ -88,5 +88,9 @@ Route::post('/editProduct',[ProductController::class,'updateProduct']);
 Route::post('/addPosts',[PostsController::class,'store']);
 Route::post('/updatePosts',[PostsController::class,'update']);
 Route::get('/allCatePosts',[PostsController::class,'allCatePosts']);
+Route::post('/deleteSoftPosts',[PostsController::class,'softDelete']);
+Route::get('/trashPosts',[PostsController::class,'loadTrash']);
+Route::post('/restoreArrTrash',[PostsController::class,'restoreTrashByArr']);
+Route::post('/deleteForeceArrTrash',[PostsController::class,'deleteForce']);
 // ==========================================================================
 

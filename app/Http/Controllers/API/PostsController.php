@@ -20,6 +20,27 @@ class PostsController extends Controller
         $result = postsM::whereNull('deleted_at')->get();
         return response()->json($result);
     }
+
+    public function loadTrash()
+    {
+        $result = postsM::onlyTrashed()->get();
+        return response()->json($result);
+    }
+    public function restoreTrashByArr(Request $request)
+    {
+         foreach ($request->arr as $key => $value) {
+            postsM::withTrashed()->where('id','=',$value)->restore();
+         }
+         return response()->json(['status'=>200]);
+    }
+    
+    public function deleteForce(Request $request)
+    {
+         foreach ($request->arr as $key => $value) {
+             postsM::withTrashed()->where('id','=',$value)->forceDelete();
+         }
+         return response()->json(['status'=>200]);
+    }
     public function index()
     {
         //
@@ -64,6 +85,13 @@ class PostsController extends Controller
     {
         $result = CatePosts::all();
         return response()->json($result);
+    }
+    public function softDelete(Request $request)
+    {
+       foreach ($request->arr as $key => $value) {
+            postsM::find($value)->delete();
+       }
+       return response()->json(['status'=>200]);
     }
     /**
      * Display the specified resource.
