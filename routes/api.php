@@ -86,6 +86,7 @@ Route::post('/switchSP',[ProductController::class,'switchSP']);
 Route::post('/editProduct',[ProductController::class,'updateProduct']);
 // ==========================================================================
 Route::post('/addPosts',[PostsController::class,'store']);
+Route::post('/updatePosts',[PostsController::class,'update']);
 Route::get('/allCatePosts',[PostsController::class,'allCatePosts']);
 // ==========================================================================
 
