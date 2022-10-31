@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\brandController;
+use App\Http\Controllers\Api\CategoriesPostController;
 use App\Http\Controllers\API\CateGroryController;
 use App\Http\Controllers\API\ColorController;
 use App\Http\Controllers\Api\PostsController;
@@ -96,4 +97,10 @@ Route::post('/deleteSoftSinglePost',[PostsController::class,'softDeleteSinglePos
 Route::post('/restoreSinglePost',[PostsController::class,'restoreSinglePostTrash']);
 Route::post('/deleteForeSinglePost',[PostsController::class,'deleteForeSinglePost']);
 // ==========================================================================
+Route::get('/allCatepost',[CategoriesPostController::class,'index']);
+Route::post('/addCatePost',[CategoriesPostController::class,'store']);
+Route::post('/updateCatePost',[CategoriesPostController::class,'update']);
+Route::post('/deleteCatePost',[CategoriesPostController::class,'delete']);
+// ==========================================================================
+
 
