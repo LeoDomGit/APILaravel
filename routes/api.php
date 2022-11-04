@@ -12,7 +12,7 @@ use App\Http\Controllers\API\SizeController;
 use App\Http\Controllers\API\TagController;
 use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\StoragesCotroller;
-
+use App\Http\Controllers\API\SliderController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -102,5 +102,10 @@ Route::post('/addCatePost',[CategoriesPostController::class,'store']);
 Route::post('/updateCatePost',[CategoriesPostController::class,'update']);
 Route::post('/deleteCatePost',[CategoriesPostController::class,'delete']);
 // ==========================================================================
+Route::get('/allSlider',[SliderController::class,'index']);
+Route::post('/addSlider',[SliderController::class,'addSlider']);
+Route::post('/deleteSlider',[SliderController::class,'deleteSlider']);
+Route::post('/editSlider',[SliderController::class,'editSlider']);
+Route::post('/allSlider/change-status',[SliderController::class,'changeStatus']);
 
 
