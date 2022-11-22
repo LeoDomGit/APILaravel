@@ -129,7 +129,7 @@ class ProductController extends BaseController
         $idProd = $_POST['idProd'];
         if (isset($_POST['idProd']) && BaseController::checkInt($_POST['idProd']) == true && $_FILES['files']['name'][0] != '') {
             $filetype = $_FILES['files']['type'];
-            $accept = ['gif', 'jpeg', 'jpg', 'png', 'svg', 'jfif', 'JFIF', 'blob', 'GIF', 'JPEG', 'JPG', 'PNG', 'SVG', 'webpimage', 'WEBIMAGE', 'webpimage', 'webpimage', 'webpimage', 'webp', 'WEBP'];
+            $accept = ['gif', 'jpeg', 'jpg', 'png', 'svg', 'jfif', 'JFIF', 'blob', 'GIF', 'JPEG', 'JPG', 'PNG','gif', 'jpeg', 'jpg', 'png', 'svg', 'jfif', 'JFIF', 'blob', 'GIF', 'JPEG', 'JPG', 'PNG', 'SVG', 'webpimage', 'WEBIMAGE', 'webpimage', 'webpimage', 'webpimage', 'webp', 'WEBP', 'SVG', 'webpimage', 'WEBIMAGE', 'webpimage', 'webpimage', 'webpimage', 'webp', 'WEBP'];
             $keyarr = [];
             foreach ($filetype as $key => $value) {
                 if (in_array($value, $accept)) {

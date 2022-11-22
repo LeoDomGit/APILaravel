@@ -130,6 +130,7 @@ class UserController extends BaseController
             }else{
                 return response()->json(true);
             }
+
         }
     }
 
